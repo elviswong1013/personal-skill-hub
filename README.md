@@ -1,111 +1,127 @@
-# Skill Refiner
+# Personal Skill Hub
 
-A meta-skill for auditing, refining, and improving agent skills. It diagnoses bad design features, identifies missing good ones, and applies a dual-direction refinement — **remove the bad, add the good** — across iterative rounds driven by feedback, evaluation, and testing.
+A personal collection of high-quality agent skills designed for portability across coding agents — Claude Code, Cursor, Codex CLI, Trae IDE, and more. Each skill is self-contained under `skills/` with a standardized hierarchical structure.
 
-## What It Does
-
-- **Diagnoses** skills across 5 categories of bad design (trigger, content, structure, generalization, trust/feedback) using a comprehensive anti-patterns taxonomy
-- **Scores** skills on 10 quality dimensions (trigger precision, intention-driven instructions, self-validation, feedback loops, etc.)
-- **Proposes** concrete refinements tagged as "remove bad feature" or "add good feature"
-- **Validates** mechanically via a structural checker (word count, frontmatter, directory integrity) and behaviorally via test scenarios
-- **Iterates** across rounds, tracking scores, test results, and changes in a scorecard
-
-## Structure
+## Repository Structure
 
 ```
-skill-refiner/
-├── SKILL.md                              # Main governance file (~1,970 words)
-├── scripts/
-│   └── validate-skill-structure.py       # Mechanical structure + word count validator
-├── references/
-│   └── skill-anti-patterns.md            # Taxonomy: 18 bad design features across 5 categories
-├── assets/
-│   └── skill-scorecard.md                # Evaluation template with iteration history tracking
+personal-skill-hub/
+├── skills/
+│   └── skill-refiner/                   # Meta-skill for auditing and improving skills
+│       ├── SKILL.md
+│       ├── scripts/
+│       ├── references/
+│       └── assets/
+├── .gitignore
 └── README.md
 ```
 
+Each skill follows the same hierarchical convention:
+
+```text
+skills/{skill-name}/
+├── SKILL.md              # Required: YAML frontmatter + step-by-step instructions
+├── scripts/              # Optional: executable helper scripts
+├── references/           # Optional: domain knowledge, style guides, API patterns
+└── assets/               # Optional: templates, diagrams, output examples
+```
+
+## Available Skills
+
+### skill-refiner
+
+A meta-skill for auditing, refining, and improving agent skills. It diagnoses bad design features, identifies missing good ones, and applies a dual-direction refinement — **remove the bad, add the good** — across iterative rounds driven by feedback, evaluation, and testing.
+
+**What it does:**
+- Diagnoses skills across 5 categories of bad design (trigger, content, structure, generalization, trust/feedback)
+- Scores skills on 10 quality dimensions
+- Proposes concrete refinements tagged as "remove bad feature" or "add good feature"
+- Validates mechanically (word count, frontmatter, directory integrity) and behaviorally (test scenarios)
+- Iterates across rounds, tracking scores and changes in a scorecard
+
 ## Installation
 
-This skill is framework-agnostic — it works with any coding agent that supports file-based skill/rule systems. The installation path depends on your agent.
+This hub is framework-agnostic. To use a skill, copy its directory into your agent's skills folder.
 
 ### Trae IDE
 
-Copy into `.trae/skills/`:
-
 ```bash
 mkdir -p .trae/skills/
-cp -r path/to/skill-refiner .trae/skills/skill-refiner
+cp -r skills/skill-refiner .trae/skills/skill-refiner
 ```
 
 ### Claude Code
 
-Copy into Claude Code's skills directory (project or global):
-
 ```bash
 # Project-level
 mkdir -p .claude/skills/
-cp -r path/to/skill-refiner .claude/skills/skill-refiner
+cp -r skills/skill-refiner .claude/skills/skill-refiner
 
-# Global (available across all projects)
+# Global
 mkdir -p ~/.claude/skills/
-cp -r path/to/skill-refiner ~/.claude/skills/skill-refiner
+cp -r skills/skill-refiner ~/.claude/skills/skill-refiner
 ```
 
 ### Cursor
 
-Copy into Cursor's rules directory:
-
 ```bash
 mkdir -p .cursor/rules/
-cp -r path/to/skill-refiner .cursor/rules/skill-refiner
+cp -r skills/skill-refiner .cursor/rules/skill-refiner
 ```
 
 ### OpenAI Codex CLI
 
-Copy into Codex's project instructions directory:
-
 ```bash
 mkdir -p .codex/skills/
-cp -r path/to/skill-refiner .codex/skills/skill-refiner
+cp -r skills/skill-refiner .codex/skills/skill-refiner
 ```
 
 ### Other Agents
 
-Copy into your agent's skill/rule directory. The skill follows the convention `{AGENT_DIR}/skills/skill-refiner/` — adapt the path to match your agent's structure. The SKILL.md and supporting files are plain Markdown and Python; no agent-specific dependencies.
+Copy into your agent's skill/rule directory. All files are plain Markdown and Python — no framework-specific APIs.
 
-### Python Dependency
+### Verify (skill-refiner)
 
-Install the optional Python dependency for the structural validator:
+Requires Python 3.7+ and `pyyaml`:
 
 ```bash
 pip install pyyaml
-```
-
-### Verify Installation
-
-Run the validator against itself from your project root (adjust the path to match your agent):
-
-```bash
-python {SKILLS_DIR}/skill-refiner/scripts/validate-skill-structure.py {SKILLS_DIR}/skill-refiner
+python skills/skill-refiner/scripts/validate-skill-structure.py skills/skill-refiner
 ```
 
 Expected output: word count within 500–2000 range, all checks passed.
 
 ## Usage
 
-The skill triggers automatically when an agent detects a skill needs improvement. You can also invoke it explicitly:
+Each skill triggers automatically when its conditions are met. You can also invoke explicitly:
 
-- "Review the code-reviewer skill"
-- "This skill triggers too often — refine it"
-- "The skill is over 2,500 words, trim it down"
+- "Refine the code-reviewer skill"
+- "Score my skills using the scorecard"
+- "This skill triggers too often — tighten it"
 
-Or drive refinement from specific signals:
+## Adding New Skills
 
-- **Feedback-driven**: "The debugger skill runs when I ask about logging — tighten its triggers"
-- **Evaluation-driven**: "Score the pdf-generator skill using the scorecard"
-- **Testing-driven**: "The validator script reports the skill exceeds 2,000 words"
+1. Create a new directory under `skills/`:
+
+   ```bash
+   mkdir -p skills/my-new-skill/{scripts,references,assets}
+   ```
+
+2. Create `skills/my-new-skill/SKILL.md` with YAML frontmatter:
+
+   ```markdown
+   ---
+   name: "my-new-skill"
+   description: "What it does. Invoke when X. Do NOT invoke when Y."
+   ---
+   # My New Skill
+   ```
+
+3. Add supporting files in `scripts/`, `references/`, and `assets/` as needed.
+
+4. Use `skill-refiner` to audit and improve it before committing.
 
 ## Requirements
 
-- **Python 3.7+** with `pyyaml` — only needed for the structural validator script
-- The skill itself (SKILL.md + supporting files) works with any agent that supports a file-based skill directory — no framework-specific APIs
+- Python 3.7+ with `pyyaml` — only needed for the structural validator in `skill-refiner`
+- All skills work with any agent that supports a file-based skill directory
