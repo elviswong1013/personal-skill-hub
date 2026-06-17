@@ -24,7 +24,7 @@ This skill refines and improves existing agent skills through a dual approach: *
 - Fixing a single concrete bug in a skill script — that's a regular code fix, not refinement.
 - The skill works well and the request is purely cosmetic (e.g., only fixing a typo).
 - The user is asking about skill mechanics conceptually without wanting changes applied.
-- The target is a regular project file, not a skill file under `.trae/skills/`.
+- The target is a regular project file, not a skill file under the agent's skills directory.
 
 ## Core Principle: Remove Bad, Add Good
 

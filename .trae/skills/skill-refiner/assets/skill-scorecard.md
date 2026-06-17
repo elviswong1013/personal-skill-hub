@@ -15,7 +15,7 @@ Rate how well the skill embodies each good feature (1 = absent, 5 = exemplary).
 
 | Good Feature | Rating (1-5) | Evidence / Notes |
 |---|---|---|
-| Razor-sharp trigger boundaries | 4 | 10 trigger conditions + 5 concrete exclusions. "DO NOT invoke" is specific. Minor overlap risk with code-reviewer on "review" keyword — mitigated by .trae/skills/ path gate. |
+| Razor-sharp trigger boundaries | 4 | 10 trigger conditions + 5 concrete exclusions. "DO NOT invoke" is specific. Minor overlap risk with code-reviewer on "review" keyword — mitigated by skills-directory path gate. |
 | Self-contained scope (no overlaps) | 4 | Explicitly defers to skill-creator for creation. Boundaries clean. |
 | Intention-driven instructions | 4 | Overwhelmingly intention-driven. One command prescription found in Stage 4 (fixed this round). |
 | Length proportional to complexity | 4 | 1,921 words fits 5-stage dual-track workflow. No filler detected. |

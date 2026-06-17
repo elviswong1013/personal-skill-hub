@@ -1,7 +1,7 @@
 """
 Skill Structure Validator
 
-Validates that a skill directory under .trae/skills/ follows the expected
+Validates that a skill directory follows the expected
 hierarchical structure. Run this script to mechanically verify layout before
 beginning manual refinement.
 
