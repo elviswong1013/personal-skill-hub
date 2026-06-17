@@ -7,9 +7,21 @@ A personal collection of high-quality agent skills designed for portability acro
 ```
 personal-skill-hub/
 ├── skills/
-│   └── skill-refiner/                   # Meta-skill for auditing and improving skills
+│   ├── skill-refiner/                   # Meta-skill for auditing and improving skills
+│   │   ├── SKILL.md
+│   │   ├── scripts/
+│   │   ├── references/
+│   │   └── assets/
+│   ├── resume-optimizer/                # Resume ATS + narrative optimization
+│   │   ├── SKILL.md
+│   │   ├── agents/
+│   │   ├── examples/
+│   │   └── references/
+│   ├── travel-wiki-builder/             # Travel wiki + PPT/MD/HTML plans
+│   │   ├── SKILL.md
+│   │   └── references/
+│   └── skill-hub-manager/               # Bidirectional GitHub sync for skills
 │       ├── SKILL.md
-│       ├── scripts/
 │       ├── references/
 │       └── assets/
 ├── .gitignore
@@ -30,66 +42,83 @@ skills/{skill-name}/
 
 ### skill-refiner
 
-A meta-skill for auditing, refining, and improving agent skills. It diagnoses bad design features, identifies missing good ones, and applies a dual-direction refinement — **remove the bad, add the good** — across iterative rounds driven by feedback, evaluation, and testing.
+Refines existing skills by removing bad design features and adding good ones. Invoke when a skill needs improvement, triggers incorrectly, is too long/short, is too rigid, or has received feedback indicating it underperforms.
 
 **What it does:**
-- Diagnoses skills across 5 categories of bad design (trigger, content, structure, generalization, trust/feedback)
+- Diagnoses skills across 5 categories of bad design (18 anti-patterns)
 - Scores skills on 10 quality dimensions
-- Proposes concrete refinements tagged as "remove bad feature" or "add good feature"
-- Validates mechanically (word count, frontmatter, directory integrity) and behaviorally (test scenarios)
-- Iterates across rounds, tracking scores and changes in a scorecard
+- Proposes dual-direction refinements (remove bad + add good)
+- Iterates across rounds driven by feedback, evaluation, and testing
+- Includes structural validator + behavioral verification scenarios
+
+### resume-optimizer
+
+Optimizes resumes with ATS compliance, narrative improvement, and professional formatting.
+
+**What it does:**
+- Audits resumes against ATS and red-flag checklists
+- Applies narrative tools to strengthen impact
+- Produces reformatted output with before/after comparisons
+- Supports Chinese and English resumes
+
+### travel-wiki-builder
+
+Builds llm-wiki 6-layer knowledge bases for any travel destination and outputs PPT/MD/HTML travel plans.
+
+**What it does:**
+- Searches and collects travel data across 6 topics
+- Builds raw → source → entity → concept → wiki → history layers
+- Outputs 19-section Markdown, dark-theme HTML, and 16:9 PPTX plans
+- Adapts to destination type (ring-road / single-city / multi-city)
+- Includes verification scenarios and safety content requirements
+
+### skill-hub-manager
+
+Manages a personal skill hub on GitHub — import, push, pull, and organize skills under a standardized skills/ directory with bidirectional sync.
+
+**What it does:**
+- 5 operations: init hub, import skill, push, pull/install, list inventory
+- Bidirectional sync between projects and GitHub
+- Auto-maintains README with current skill inventory
+- Optional `--validate` flag for pre-push quality checks
+- Ask Before Change guardrail for all destructive operations
+- Multi-repo and multi-agent support
 
 ## Installation
 
-This hub is framework-agnostic. To use a skill, copy its directory into your agent's skills folder.
+This hub is framework-agnostic. Clone the repo and copy desired skills into your agent's skills folder.
+
+```bash
+git clone https://github.com/elviswong1013/personal-skill-hub.git
+```
 
 ### Trae IDE
 
 ```bash
-mkdir -p .trae/skills/
-cp -r skills/skill-refiner .trae/skills/skill-refiner
+cp -r personal-skill-hub/skills/skill-refiner .trae/skills/skill-refiner
 ```
 
 ### Claude Code
 
 ```bash
 # Project-level
-mkdir -p .claude/skills/
-cp -r skills/skill-refiner .claude/skills/skill-refiner
+cp -r personal-skill-hub/skills/skill-refiner .claude/skills/skill-refiner
 
 # Global
-mkdir -p ~/.claude/skills/
-cp -r skills/skill-refiner ~/.claude/skills/skill-refiner
+cp -r personal-skill-hub/skills/skill-refiner ~/.claude/skills/skill-refiner
 ```
 
 ### Cursor
 
 ```bash
-mkdir -p .cursor/rules/
-cp -r skills/skill-refiner .cursor/rules/skill-refiner
+cp -r personal-skill-hub/skills/skill-refiner .cursor/rules/skill-refiner
 ```
 
 ### OpenAI Codex CLI
 
 ```bash
-mkdir -p .codex/skills/
-cp -r skills/skill-refiner .codex/skills/skill-refiner
+cp -r personal-skill-hub/skills/skill-refiner .codex/skills/skill-refiner
 ```
-
-### Other Agents
-
-Copy into your agent's skill/rule directory. All files are plain Markdown and Python — no framework-specific APIs.
-
-### Verify (skill-refiner)
-
-Requires Python 3.7+ and `pyyaml`:
-
-```bash
-pip install pyyaml
-python skills/skill-refiner/scripts/validate-skill-structure.py skills/skill-refiner
-```
-
-Expected output: word count within 500–2000 range, all checks passed.
 
 ## Usage
 
@@ -97,7 +126,8 @@ Each skill triggers automatically when its conditions are met. You can also invo
 
 - "Refine the code-reviewer skill"
 - "Score my skills using the scorecard"
-- "This skill triggers too often — tighten it"
+- "Push this skill to my hub"
+- "Build a travel wiki for Tokyo"
 
 ## Adding New Skills
 
@@ -120,6 +150,8 @@ Each skill triggers automatically when its conditions are met. You can also invo
 3. Add supporting files in `scripts/`, `references/`, and `assets/` as needed.
 
 4. Use `skill-refiner` to audit and improve it before committing.
+
+5. Use `skill-hub-manager` to push it to GitHub — the README updates automatically.
 
 ## Requirements
 

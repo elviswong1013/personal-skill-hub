@@ -36,6 +36,18 @@ Manages a personal collection of agent skills stored on GitHub under a standardi
 
 Present a clear summary of what will happen, then ask. Do not proceed without explicit approval.
 
+## Core Principle: Auto-Maintain README
+
+**The hub's README.md must always reflect the current skill inventory.** After any operation that adds, removes, or renames a skill, regenerate the README:
+
+1. **Scan `skills/`** — list all subdirectories. For each, read `SKILL.md` and extract the `description` from YAML frontmatter.
+2. **Rebuild the Available Skills section** — for each skill, include its name, extracted description, and a brief summary of what it does (from the SKILL.md intro paragraph).
+3. **Update the Repository Structure tree** — reflect the current set of skills.
+4. **Preserve hand-written sections** — Installation, Usage, Adding New Skills, and Requirements sections are template content; keep them intact. Only regenerate the "Available Skills" section and the structure diagram.
+5. **Stage README.md alongside the skill changes** — commit it in the same commit as the import/removal, or as a follow-up commit with a message like "Update README with skill inventory".
+
+This ensures the hub is self-documenting: cloning the repo and reading the README gives a complete picture of what's inside.
+
 ## Workflow
 
 ### Operation 1: Initialize a Hub
@@ -56,7 +68,8 @@ When the user wants to add a skill from a project to their hub:
 2. **Detect conflicts** — check if a skill with the same name already exists in `skills/`. If so, ask whether to overwrite, skip, or import under a different name.
 3. **Present the import plan**: "Import `{skill-name}` from `{source-path}` → `skills/{skill-name}/`. Contains `{n}` files. Proceed?"
 4. **Copy the skill** — recursively copy the entire skill directory into `skills/{skill-name}/`, preserving all subdirectories.
-5. **Stage the change** — git add the new skill directory.
+5. **Regenerate README** — scan `skills/`, rebuild the "Available Skills" section and structure diagram. Stage README.md.
+6. **Stage the change** — git add the new skill directory and README.md.
 
 ### Operation 3: Push to GitHub
 
