@@ -28,21 +28,20 @@ This skill refines and improves existing agent skills through a dual approach: *
 
 ## Core Principle: Remove Bad, Add Good
 
-Every refinement action falls into one of two categories:
+Every refinement action is one of two things:
 
-1. **Remove a bad design feature.** Consult `references/skill-anti-patterns.md` for the full taxonomy. Bad features span trigger design, content quality, structural design, generalization, and trust/feedback failures. Each bad feature removed reduces the skill's brittleness, ambiguity, or narrowness.
+1. **Remove a bad design feature.** Consult `references/skill-anti-patterns.md` — taxonomy spans trigger, content, structure, generalization, and trust/feedback.
+2. **Add a good design feature.** Consult the benchmark below — sharp triggers, intention-driven instructions, self-validation, feedback loops.
 
-2. **Add a good design feature.** Consult the "What Makes a Great Skill" benchmark below for the target state. Good features include sharp trigger boundaries, intention-driven instructions, self-validation, and feedback loops. Each good feature added increases the skill's robustness, clarity, and reusability.
-
-Every change in the refinement plan should be explicitly tagged as "remove" or "add." A skill that only removes bad features without adding good ones becomes hollow. A skill that only adds features without removing bad ones stays broken. Both directions are required.
+Tag every change as "remove" or "add." Removing without adding leaves a hollow skill; adding without removing leaves it broken. Both are required.
 
 ## Core Principle: Use Scripts, Don't Rebuild
 
 When mechanical steps are needed (word counting, structure validation), leverage existing tools before creating anything new.
 
-- **Check first**: Verify an existing script in `scripts/` already handles the task. Invoke it — don't waste tokens recreating what exists.
-- **If it fails**: Don't debug or patch the broken script. Instead, create a temporary script based on the intention described in this document to complete the task. The principles define what needs to happen; the temporary script simply carries it out mechanically.
-- **New permanent scripts**: Only add a script to `scripts/` when the task is genuinely mechanical, frequent, and reusable across refinement rounds. One-off needs don't justify permanent additions.
+- **Check first**: Verify an existing script already handles the task. Invoke it — don't recreate what exists.
+- **If it fails**: Don't debug it. Create a temporary script based on the intention in this document. Principles define what needs to happen; the script carries it out.
+- **New permanent scripts**: Only add when the task is mechanical, frequent, and reusable. One-off needs don't justify permanent additions.
 
 ## Refinement Workflow
 
@@ -50,7 +49,7 @@ This workflow is intention-driven and iterative. It describes what to achieve at
 
 ### Stage 1: Diagnosis — Understand What's Wrong and What's Missing
 
-Before making any changes, read the skill's `SKILL.md` and any supporting files. Form a judgment across two parallel tracks. Do not modify anything yet.
+Before making any changes, read the skill's `SKILL.md` and any supporting files in `scripts/`, `references/`, and `assets/`. Form a judgment across two parallel tracks. Do not modify anything yet.
 
 **Track A: Identify Bad Features Present**
 
@@ -89,7 +88,14 @@ When removing bad features, work through the categories in `references/skill-ant
 
 When adding good features, work through the benchmark below: add exclusion clauses, introduce branching logic where workflows are linear, build in self-validation, establish feedback loops, and define testing instructions.
 
-Keep the YAML frontmatter and update the `description` field to reflect refined trigger boundaries.
+**The refinement scope includes all files under the skill directory** — not just `SKILL.md`:
+
+- **Edit `SKILL.md`**: Update instructions, triggers, and workflow descriptions. Keep the YAML frontmatter, update `description`.
+- **Edit `references/`**: Extract hardcoded domain knowledge (color specs, API signatures, style guides) from the body into reference files. Create new references when domain knowledge would help the agent.
+- **Edit `assets/`**: Update templates, examples, or output specs to match the refined skill. Add templates the skill lacks.
+- **Edit `scripts/`**: Only for genuinely mechanical, frequent tasks not already covered. Prefer intention-based guidelines.
+
+Every supporting file change must be referenced from `SKILL.md`.
 
 ### Stage 4: Validate — Run Checks and Record Results
 
