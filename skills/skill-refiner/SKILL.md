@@ -68,15 +68,25 @@ If this round is driven by external input, map each signal to its root cause:
 - **Evaluation results**: Compare against the previous round's scorecard. Which bad features persisted? Which good features still haven't landed?
 - **Testing results**: Trace each test failure to the bad feature or missing good feature that caused it.
 
+**Track D: Identify Extraction and Enhancement Opportunities**
+
+Scan `SKILL.md` for content that would serve better in supporting files:
+
+- **Extraction candidates**: Lengthy blocks of domain knowledge, examples, verification scenarios, templates, or reference tables. If moving them to `references/` or `assets/` would improve clarity or conciseness — flag them.
+- **Enhancement candidates**: Content already in `references/` or `assets/` that is thin and could be expanded with more detail during refinement.
+- Record what to move or enhance, the target file, and the improvement.
+
 Fill out a new `assets/skill-scorecard.md` entry for this round, including the "Bad Features Identified", "Good Features Missing", and if applicable, the "Iteration History" linking back to the previous round.
 
 ### Stage 2: Propose — Draft a Dual-Direction Plan
 
-Present a structured refinement plan to the user, grouped into two sections. For each change, state the current problem, the concrete edit that resolves it, and why it matters.
+Present a structured refinement plan to the user, grouped into sections. For each change, state the current problem, the concrete edit that resolves it, and why it matters.
 
 **Section 1: Bad Features to Remove** — List each bad feature from diagnosis with its removal edit and the failure mode it prevents.
 
 **Section 2: Good Features to Add** — List each missing good feature from diagnosis with its addition and the quality dimension it elevates.
+
+**Section 3: Extract and Enhance** — List extraction candidates from Track D: what to move out of `SKILL.md` into `references/` or `assets/`, and what existing supporting file content should be enriched with more detail. For each, state the target file and the improvement it brings.
 
 Ask the user to approve the plan before making edits. If the user provides additional feedback at this stage, fold it back into the diagnosis and update the plan.
 
@@ -149,31 +159,7 @@ Use these heuristics for evaluation and as targets when adding good features.
 
 ## Verification Scenarios
 
-These behavioral walkthroughs test the refiner end-to-end. Use them to validate changes to this skill, or as a model for other skills' test scenarios.
-
-### Scenario A: Skill With Over-Broad Triggers
-
-**Setup:** Identify a skill whose description says "Invoke for any task involving code" with no exclusion section.
-
-**Expected:** Diagnosis spots "Over-broad triggers" and "Missing exclusion clauses." The proposal adds concrete counterexamples. After refinement, reading only the description, an agent can name 3 scenarios where the skill should not activate.
-
-**Pass:** Both bad features removed; exclusions are concrete, not vague.
-
-### Scenario B: Skill Bloated Above 2,000 Words
-
-**Setup:** Identify a skill whose body exceeds 2,200 words with visible filler paragraphs that restate section headings.
-
-**Expected:** Diagnosis identifies "Redundancy and filler" with specific line citations. The proposal targets filler for removal without touching substantive instructions. After refinement, word count is 500–2,000 and all original workflow steps remain intact.
-
-**Pass:** Word count in range, zero filler sentences, no substantive content lost.
-
-### Scenario C: Refinement Driven by User Feedback
-
-**Setup:** User reports "The skill runs when I ask about file permissions, but it's for database migrations only."
-
-**Expected:** Feedback maps to "Over-broad triggers" in Track C. The proposal tightens the description. After refinement, the "When NOT to Invoke" section explicitly excludes file permission tasks.
-
-**Pass:** The user's reported false-trigger scenario appears in the exclusion list.
+Three behavioral walkthroughs in `assets/verification-scenarios.md` test the refiner end-to-end: over-broad trigger diagnosis, filler removal from bloated skills, and feedback-driven refinement. Use them to validate changes to this skill, or as a model for other skills' test scenarios.
 
 ## References Directory
 
@@ -195,3 +181,4 @@ Scripts include usage documentation in their headers.
 `assets/` contains templates and reference outputs:
 
 - `skill-scorecard.md`: A structured evaluation template for recording bad features found, good features missing, scores across dimensions, iteration history, and test results. Fill out a fresh entry for each refinement round to track the skill's evolution over time.
+- `verification-scenarios.md`: Three behavioral walkthroughs that test the refiner end-to-end. Consult during Stage 4 validation.
