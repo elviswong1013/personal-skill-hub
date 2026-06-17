@@ -91,8 +91,8 @@ When adding good features, work through the benchmark below: add exclusion claus
 **The refinement scope includes all files under the skill directory** — not just `SKILL.md`:
 
 - **Edit `SKILL.md`**: Update instructions, triggers, and workflow descriptions. Keep the YAML frontmatter, update `description`.
-- **Edit `references/`**: Extract hardcoded domain knowledge (color specs, API signatures, style guides) from the body into reference files. Create new references when domain knowledge would help the agent.
-- **Edit `assets/`**: Update templates, examples, or output specs to match the refined skill. Add templates the skill lacks.
+- **Edit `references/`**: Extract hardcoded domain knowledge (color specs, APIs, style guides) from the body. General rule: if content in `SKILL.md` is lengthy and moving it to `references/` would improve the skill — do it. Create new references when domain knowledge would help.
+- **Edit `assets/`**: Update templates and examples. Same rule: if lengthy template content in `SKILL.md` would serve better as a standalone asset, extract it. Add templates the skill lacks.
 - **Edit `scripts/`**: Only for genuinely mechanical, frequent tasks not already covered. Prefer intention-based guidelines.
 
 Every supporting file change must be referenced from `SKILL.md`.
