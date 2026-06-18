@@ -53,13 +53,13 @@ Refines existing skills by removing bad design features and adding good ones. In
 
 ### resume-optimizer
 
-Optimizes resumes with ATS compliance, narrative improvement, and professional formatting.
+面向求职者的简历审计与优化，深度审计简历、职责型→成果型改写、JD 匹配、一页压缩。
 
 **What it does:**
-- Audits resumes against ATS and red-flag checklists
-- Applies narrative tools to strengthen impact
-- Produces reformatted output with before/after comparisons
-- Supports Chinese and English resumes
+- 8-step audit workflow: context establishment → 30s judgment → thorough audit → gap detection → value extraction → rewrite strategy → rewrite & review → one-page compression
+- JD cross-check and tech-stack adjacency inference to detect potentially missing skills/experience (Step 3.5)
+- Applies STAR/CAR narrative tools, ATS and red-flag checklists
+- Supports Chinese and English resumes; outputs action checklist
 
 ### travel-wiki-builder
 
